@@ -51,7 +51,7 @@ node server.mjs
 ```
 
 Open your browser at:
-`http://localhost:8090` (or `http://62.238.126.108:8090`)
+`https://nansen.gogettest.online/` (or `http://localhost:8090`)
 
 ---
 
