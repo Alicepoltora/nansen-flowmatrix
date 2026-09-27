@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nansen FlowMatrix — Smart Money Signal Engine</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cascadia+Code:wght@400;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="terminal-bg"></div>
+
+  <!-- Header Navigation -->
+  <header class="top-nav">
+    <div class="nav-left">
+      <div class="logo-group">
+        <div class="logo-pulse"></div>
+        <div class="logo-title">
+          <span class="brand">NANSEN</span>
+          <span class="product">FLOWMATRIX</span>
+        </div>
+        <span class="tag-live">LIVE ON-CHAIN</span>
+      </div>
+      <div class="nav-metrics">
+        <div class="kpi-pill">
+          <span class="kpi-label">API LATENCY</span>
+          <span class="kpi-val text-green" id="kpi-latency">42ms</span>
+        </div>
+        <div class="kpi-pill">
+          <span class="kpi-label">SM 24H NETFLOW</span>
+          <span class="kpi-val" id="kpi-netflow">$0.0M</span>
+        </div>
+        <div class="kpi-pill">
+          <span class="kpi-label">ACTIVE TOKENS</span>
+          <span class="kpi-val text-cyan" id="kpi-tokens">0</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav-right">
+      <div class="refresh-controls">
+        <span class="countdown-text" id="refresh-countdown">Sync in 30s</span>
+        <button id="btn-refresh" class="btn-icon" title="Force Refresh">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+        </button>
+      </div>
+      <div class="status-badge" id="api-status">
+        <span class="dot green"></span>
+        <span>CONNECTED</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Filter & Tab Toolbar -->
+  <div class="control-bar">
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="spot">
+        <span class="tab-indicator green"></span>
+        🟢 Spot Accumulation Radar
+        <span class="counter-badge" id="count-spot">0</span>
+      </button>
+      <button class="tab-btn" data-tab="long">
+        <span class="tab-indicator cyan"></span>
+        🚀 Momentum Long Scanner
+        <span class="counter-badge" id="count-long">0</span>
+      </button>
+      <button class="tab-btn" data-tab="short">
+        <span class="tab-indicator red"></span>
+        🔴 Distribution Short Alerts
+        <span class="counter-badge" id="count-short">0</span>
+      </button>
+      <button class="tab-btn" data-tab="dex">
+        <span class="tab-indicator yellow"></span>
+        ⚡ Live Smart Money DEX Tape
+      </button>
+    </div>
+
+    <div class="filter-group">
+      <div class="search-box">
+        <input type="text" id="token-search" placeholder="Search symbol or address...">
+      </div>
+      <div class="chain-selector" id="chain-filters">
+        <button class="chain-pill active" data-chain="all">All</button>
+        <button class="chain-pill" data-chain="solana">Solana</button>
+        <button class="chain-pill" data-chain="ethereum">Ethereum</button>
+        <button class="chain-pill" data-chain="base">Base</button>
+        <button class="chain-pill" data-chain="arbitrum">Arbitrum</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Dashboard -->
+  <main class="main-container">
+    <!-- Spot Section -->
+    <section id="section-spot" class="tab-content active">
+      <div class="section-intro">
+        <div class="intro-text">
+          <h2>🟢 Spot Accumulation Ignition (DCA Start)</h2>
+          <p>Identifies tokens where Smart Money is aggressively accumulating in ranges without price pumps. High 7D netflow + holder growth + low retail volatility.</p>
+        </div>
+        <div class="legend-box">
+          <span class="rule">✓ 7D Netflow > +$20k</span>
+          <span class="rule">✓ SM Balance % Growth</span>
+          <span class="rule">✓ Wallet Absorption</span>
+        </div>
+      </div>
+      <div class="signals-grid" id="grid-spot">
+        <div class="loader-skeleton">Scanning live Smart Money holdings...</div>
+      </div>
+    </section>
+
+    <!-- Long Section -->
+    <section id="section-long" class="tab-content">
+      <div class="section-intro">
+        <div class="intro-text">
+          <h2>🚀 Momentum Long Scanner (Breakouts & Squeezes)</h2>
+          <p>Tokens with explosive Smart Money DEX market buys ($Buy/Sell > 2.5x), 1h netflow acceleration, and multiple fresh smart wallets front-running.</p>
+        </div>
+        <div class="legend-box">
+          <span class="rule">✓ DEX Buy Ratio > 65%</span>
+          <span class="rule">✓ 1H Inflow Surge</span>
+          <span class="rule">✓ Multiple SM Buyers</span>
+        </div>
+      </div>
+      <div class="signals-grid" id="grid-long">
+        <div class="loader-skeleton">Analyzing DEX swap flows...</div>
+      </div>
+    </section>
+
+    <!-- Short Section -->
+    <section id="section-short" class="tab-content">
+      <div class="section-intro">
+        <div class="intro-text">
+          <h2>🔴 Distribution Short Alerts (Exit Liquidity Dump)</h2>
+          <p>Tokens where Smart Money is dumping into retail FOMO. Heavy negative 24h & 1h netflow, balance reductions, and selling to stablecoins.</p>
+        </div>
+        <div class="legend-box">
+          <span class="rule">✓ 24H Netflow < -$25k</span>
+          <span class="rule">✓ Heavy DEX Selling</span>
+          <span class="rule">✓ SM Exit Liquidity</span>
+        </div>
+      </div>
+      <div class="signals-grid" id="grid-short">
+        <div class="loader-skeleton">Calculating distribution risks...</div>
+      </div>
+    </section>
+
+    <!-- Live DEX Trades Tape -->
+    <section id="section-dex" class="tab-content">
+      <div class="section-intro">
+        <div class="intro-text">
+          <h2>⚡ Real-Time Smart Money DEX Tape</h2>
+          <p>Live stream of high-value transactions executed by Smart Money labels across decentralized exchanges.</p>
+        </div>
+      </div>
+      <div class="tape-table-wrapper">
+        <table class="tape-table">
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Chain</th>
+              <th>Action</th>
+              <th>Token</th>
+              <th>Size ($USD)</th>
+              <th>Trader Label / Wallet</th>
+              <th>Tx Hash</th>
+            </tr>
+          </thead>
+          <tbody id="dex-tape-body">
+            <tr><td colspan="7" class="text-center">Loading DEX Tape...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- Deep Dive Signal Modal -->
+  <div class="modal-backdrop" id="signal-modal" style="display: none;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-token-info">
+          <span class="modal-symbol" id="modal-symbol">TOKEN</span>
+          <span class="chain-tag" id="modal-chain">solana</span>
+          <span class="modal-score" id="modal-score">Score: 92/100</span>
+        </div>
+        <button class="btn-close" id="btn-close-modal">&times;</button>
+      </div>
+      <div class="modal-body" id="modal-content">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

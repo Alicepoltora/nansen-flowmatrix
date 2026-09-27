@@ -1,0 +1,13 @@
+{
+  "name": "nansen-flowmatrix",
+  "version": "1.0.0",
+  "description": "On-chain Smart Money Signal Matrix for Spot Accumulation, Momentum Longs and Distribution Shorts",
+  "type": "module",
+  "main": "server.mjs",
+  "scripts": {
+    "start": "node server.mjs"
+  },
+  "keywords": ["nansen", "smart-money", "trading-signals", "crypto", "defi"],
+  "author": "Antigravity",
+  "license": "MIT"
+}
